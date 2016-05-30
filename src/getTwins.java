@@ -32,25 +32,94 @@ public class getTwins {
     }
 
     //TODO:Going through each file and finding twins.
+    String charset = java.nio.charset.StandardCharsets.UTF_8.name();
+
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+
+    // use the factory to create a documentBuilder
+    DocumentBuilder builder = factory.newDocumentBuilder();
+
 
     for (int year = END_YEAR; year >= START_YEAR; year--) {
 
       RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
           "r");
+      int count =0;
 
       while (true) {
 
 
         int PMID_i = Integer.parseInt(file.readLine());
-        System.out.println(PMID_i);
+        System.out.println(count);
+        count++;
         long file_pointer = file.getFilePointer();
 
-        for (int j=1; j <= 100; j++) {
-        int PMID_j = Integer.parseInt(file.readLine());
-          //TODO: Compare pmid_i and pmid_j
+        String url_citations_i = createURL_citation(PMID_i);
+
+        URLConnection connection = new URL(url_citations_i).openConnection();
+        connection.setRequestProperty("Accept-Charset", charset);
+        InputStream response_i = connection.getInputStream();
+
+        // create a new document from input stream
+        Document doc = builder.parse(response_i);
+
+
+        // get the first element
+        Element root = doc.getDocumentElement();
+
+        NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+        Element linkSet_i = (Element) linkSet_List.item(0);
+        NodeList LinkSetDb_list_i = linkSet_i.getElementsByTagName("LinkSetDb");
+        if (LinkSetDb_list_i.getLength() == 0) {
+          continue;
+        }
+        Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+        NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+            ("Link");
+
+        if (link_nodes_i.getLength() <= 0) {
+          continue;
         }
 
+        for (int j = 1; j <= 100; j++) {
+
+
+          int PMID_j = Integer.parseInt(file.readLine());
+          String url_citations_j = createURL_citation(PMID_j);
+
+
+          connection = new URL(url_citations_j).openConnection();
+          connection.setRequestProperty("Accept-Charset", charset);
+          InputStream response_j = connection.getInputStream();
+          doc = builder.parse(response_j);
+          root = doc.getDocumentElement();
+
+          linkSet_List = root.getElementsByTagName("LinkSet");
+          Element linkSet_j = (Element) linkSet_List.item(0);
+          NodeList LinkSetDb_list_j = linkSet_j.getElementsByTagName
+              ("LinkSetDb");
+          if (LinkSetDb_list_j.getLength() == 0) {
+            continue;
+          }
+          Element linkSetDb_element_j = (Element) LinkSetDb_list_j.item(0);
+          NodeList link_nodes_j = linkSetDb_element_j.getElementsByTagName
+              ("Link");
+
+          if (link_nodes_j.getLength() <= 0) {
+            continue;
+          }
+
+          int val = compareLinkNodes(link_nodes_i, link_nodes_j);
+          if (val >= 1) {
+            System.out.println(PMID_i + "and" + PMID_j + " with value:" + val);
+          }
+
+
+          //TODO: Compare pmid_i and pmid_j
+        }
         file.seek(file_pointer);
+
       }
 
 
@@ -60,6 +129,32 @@ public class getTwins {
     }
 
 
+  }
+
+  private static int compareLinkNodes(NodeList link_nodes_i, NodeList link_nodes_j) {
+    int len_i = link_nodes_i.getLength();
+    int len_j = link_nodes_j.getLength();
+    int val = 0;
+
+    for (int c1 = 0; c1 < len_i; c1++) {
+      for (int c2 = 0; c2 < len_j; c2++) {
+        if (link_nodes_i.item(c1).getTextContent().equals
+            (link_nodes_j.item(c2).getTextContent())) {
+          val++;
+          break;
+        }
+      }
+    }
+    return val;
+  }
+
+  private static String createURL_citation(int pmid) {
+    String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
+        ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin&id=" + pmid +
+        "&tool" +
+        "=my_tool&email=my_email@example.com";
+
+    return url;
   }
 
   private static void loadPapers(int year) throws IOException, ParserConfigurationException, SAXException {
