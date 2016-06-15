@@ -45,13 +45,13 @@ public class getTwins {
 
       RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
           "r");
-      int count =0;
+      int count = 0;
 
       while (true) {
 
 
         int PMID_i = Integer.parseInt(file.readLine());
-        System.out.println(count);
+        //System.out.println(count);
         count++;
         long file_pointer = file.getFilePointer();
 
@@ -67,9 +67,17 @@ public class getTwins {
 
         // get the first element
         Element root = doc.getDocumentElement();
-
+        if (root == null) {
+          continue;
+        }
         NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+        if (linkSet_List == null) {
+          continue;
+        }
         Element linkSet_i = (Element) linkSet_List.item(0);
+        if (linkSet_i == null) {
+          continue;
+        }
         NodeList LinkSetDb_list_i = linkSet_i.getElementsByTagName("LinkSetDb");
         if (LinkSetDb_list_i.getLength() == 0) {
           continue;
@@ -78,11 +86,11 @@ public class getTwins {
         NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
             ("Link");
 
-        if (link_nodes_i.getLength() <= 0) {
+        if (link_nodes_i.getLength() <= 5) {
           continue;
         }
 
-        for (int j = 1; j <= 100; j++) {
+        for (int j = 1; j <= 6; j++) {
 
 
           int PMID_j = Integer.parseInt(file.readLine());
@@ -91,11 +99,15 @@ public class getTwins {
 
           connection = new URL(url_citations_j).openConnection();
           connection.setRequestProperty("Accept-Charset", charset);
+          //TODO :Exception Handling when connection lost.
           InputStream response_j = connection.getInputStream();
           doc = builder.parse(response_j);
           root = doc.getDocumentElement();
 
           linkSet_List = root.getElementsByTagName("LinkSet");
+          if (linkSet_List.getLength() == 0) {
+            continue;
+          }
           Element linkSet_j = (Element) linkSet_List.item(0);
           NodeList LinkSetDb_list_j = linkSet_j.getElementsByTagName
               ("LinkSetDb");
@@ -106,7 +118,7 @@ public class getTwins {
           NodeList link_nodes_j = linkSetDb_element_j.getElementsByTagName
               ("Link");
 
-          if (link_nodes_j.getLength() <= 0) {
+          if (link_nodes_j.getLength() <= 5) {
             continue;
           }
 
@@ -153,6 +165,17 @@ public class getTwins {
         ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin&id=" + pmid +
         "&tool" +
         "=my_tool&email=my_email@example.com";
+
+    return url;
+  }
+
+  private static String createURL_citation(int[] pmids) {
+    String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
+        ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin";
+    for (int i = 0; i < pmids.length; i++) {
+      url = url + "&id=" + pmids[i];
+    }
+    url = url + "&tool=my_tool&email=my_email@example.com";
 
     return url;
   }

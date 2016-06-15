@@ -64,13 +64,13 @@ public class trial {
 //    URLConnection connection = new URL(url).openConnection();
 //    connection.setRequestProperty("Accept-Charset", charset);
 //    InputStream response = connection.getInputStream();
-
+//
 //    try (Scanner scanner = new Scanner(response)) {
 //      String responseBody = scanner.useDelimiter("\\A").next();
 //      System.out.println(responseBody);
 //    }
-
-
+//
+//
 //    url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
 //        ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin&id=10557283&tool=my_tool&email=my_email@example.com";
 //
@@ -78,13 +78,13 @@ public class trial {
 //    connection = new URL(url).openConnection();
 //    connection.setRequestProperty("Accept-Charset", charset);
 //    response = connection.getInputStream();
-
+//
 //    try (Scanner scanner = new Scanner(response)) {
 //      String responseBody = scanner.useDelimiter("\\A").next();
 //      System.out.println(responseBody);
 //    }
-
-    // create a new DocumentBuilderFactory
+//
+//     create a new DocumentBuilderFactory
 //    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //
 //    try {
@@ -108,14 +108,14 @@ public class trial {
 //        Element e = (Element) ids_nodes.item(i);
 //        System.out.println(e.getTextContent());
 //      }
-
-
+//
+//
 //      System.out.println(nodes.getLength());
 //      System.out.println(nodes.item(0));
 //      System.out.println(nodes.item(1));
 //      System.out.println(nodes.item(2));
-
-      // print the text content of each child
+//
+//       print the text content of each child
 //      for (int i = 0; i < nodes.getLength(); i++) {
 //        System.out.println("" + nodes.item(i).getTextContent());
 //      }
