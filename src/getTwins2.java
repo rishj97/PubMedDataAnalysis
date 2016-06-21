@@ -16,9 +16,9 @@ public class getTwins2 {
   static int retmax_limit = 10000;
   static int comp_limit = 5;
   static String file_name = "year_data";
-  static int START_YEAR = 1996;
-  static int END_YEAR = 2000;
-  static boolean isLoaded = true;
+  static int START_YEAR = 1998;
+  static int END_YEAR = 2009;
+  static boolean isLoaded = false;
   static int pmids_limit = 200;
 
 
@@ -26,6 +26,8 @@ public class getTwins2 {
 
   public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
     int i;
+    START_YEAR = Integer.parseInt(args[0]);
+    END_YEAR = Integer.parseInt(args[1]);
     //Loading data year by year in different files.
     if (!isLoaded) {
       for (i = END_YEAR; i >= START_YEAR; i--) {
