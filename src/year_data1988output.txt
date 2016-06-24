@@ -1,0 +1,17 @@
+3074019 and 3074017 with value:5
+3074019 and 3074016 with value:5
+3074017 and 3074016 with value:5
+3056936 and 3056935 with value:14
+2848319 and 2848318 with value:36
+3209466 and 3209465 with value:9
+3194843 and 3194842 with value:8
+3151496 and 3151494 with value:6
+3142857 and 3142856 with value:32
+2848200 and 2848199 with value:27
+2847610 and 2847609 with value:28
+2902928 and 2902927 with value:87
+3265653 and 3265652 with value:5
+3235974 and 3235973 with value:78
+3227954 and 3227953 with value:4
+3214009 and 3214008 with value:5
+3198492 and 3198491 with value:8
