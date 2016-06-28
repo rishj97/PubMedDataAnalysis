@@ -17,7 +17,7 @@ public class getTwins2 {
   static int comp_limit = 5;
   static String file_name = "year_data";
   static int START_YEAR = 1998;
-  static int END_YEAR = 1998;
+  static int END_YEAR = 1999;
   static boolean isLoaded = true;
   static int pmids_limit = 200;
 
@@ -73,12 +73,16 @@ public class getTwins2 {
               file_pointer = file.getFilePointer();
             }
             int integer;
-
-            integer = Integer.parseInt(file.readLine());
-            if(integer==-1) {
+            String str = file.readLine();
+            if(str == null) {
               end_of_file=1;
               break;
             }
+            integer = Integer.parseInt(file.readLine());
+//            if(integer==-1) {
+//              end_of_file=1;
+//              break;
+//            }
 
             pmids[count] = integer;
 
