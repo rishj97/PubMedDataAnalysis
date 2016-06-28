@@ -17,8 +17,8 @@ public class getTwins2 {
   static int comp_limit = 5;
   static String file_name = "year_data";
   static int START_YEAR = 1998;
-  static int END_YEAR = 2009;
-  static boolean isLoaded = false;
+  static int END_YEAR = 1998;
+  static boolean isLoaded = true;
   static int pmids_limit = 200;
 
 
@@ -26,8 +26,11 @@ public class getTwins2 {
 
   public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
     int i;
-    START_YEAR = Integer.parseInt(args[0]);
-    END_YEAR = Integer.parseInt(args[1]);
+    if(args.length==2) {
+      START_YEAR = Integer.parseInt(args[0]);
+      END_YEAR = Integer.parseInt(args[1]);
+      isLoaded = false;
+    }
     //Loading data year by year in different files.
     if (!isLoaded) {
       for (i = END_YEAR; i >= START_YEAR; i--) {
@@ -50,6 +53,7 @@ public class getTwins2 {
 
       RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
           "r");
+      int end_of_file = 0;
       int count = 0;
       int cc = 0;
       FileWriter file_writer = new FileWriter(file_name + year + "output.txt");
@@ -59,6 +63,7 @@ public class getTwins2 {
         long file_pointer = 0;
         int[] pmids = new int[pmids_limit];
         count = 0;
+        ++cc;
         //System.out.println(++cc);
         try {
           //do stuff with code, like reading from file
@@ -70,12 +75,19 @@ public class getTwins2 {
             int integer;
 
             integer = Integer.parseInt(file.readLine());
+            if(integer==-1) {
+              end_of_file=1;
+              break;
+            }
 
             pmids[count] = integer;
 
 
             //System.out.println(count);
             count++;
+          }
+          if(end_of_file==1) {
+            break;
           }
 
 
@@ -166,7 +178,9 @@ public class getTwins2 {
 
 
         } catch (Exception e) {
-          break;
+          System.out.println(e);
+          System.out.println(cc);
+          continue;
         }
       }
     }
