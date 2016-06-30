@@ -16,8 +16,8 @@ public class getTwins2 {
   static int retmax_limit = 10000;
   static int comp_limit = 5;
   static String file_name = "year_data";
-  static int START_YEAR = 1998;
-  static int END_YEAR = 1999;
+  static int START_YEAR = 1999;
+  static int END_YEAR = 2001;
   static boolean isLoaded = true;
   static int pmids_limit = 200;
 
@@ -48,7 +48,6 @@ public class getTwins2 {
     // use the factory to create a documentBuilder
     DocumentBuilder builder = factory.newDocumentBuilder();
 
-
     for (int year = END_YEAR; year >= START_YEAR; year--) {
 
       RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
@@ -65,7 +64,7 @@ public class getTwins2 {
         count = 0;
         ++cc;
         //System.out.println(++cc);
-        try {
+       try {
           //do stuff with code, like reading from file
 
           while (count < pmids_limit) {
@@ -150,6 +149,9 @@ public class getTwins2 {
 //            continue;
 //          }
               Element linkSet_j = (Element) linkSet_List.item(j);
+              if (linkSet_j == null) {
+                continue;
+              }
               NodeList LinkSetDb_list_j = linkSet_j.getElementsByTagName
                   ("LinkSetDb");
               if (LinkSetDb_list_j.getLength() == 0) {
@@ -184,6 +186,8 @@ public class getTwins2 {
         } catch (Exception e) {
           System.out.println(e);
           System.out.println(cc);
+          System.out.println(year);
+
           continue;
         }
       }
