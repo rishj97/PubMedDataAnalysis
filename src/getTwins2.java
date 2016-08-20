@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 
 public class getTwins2 {
 
@@ -16,112 +17,115 @@ public class getTwins2 {
   static int retmax_limit = 10000;
   static int comp_limit = 5;
   static String file_name = "year_data";
-  static int START_YEAR = 1999;
-  static int END_YEAR = 2001;
+  static int START_YEAR = 2004;
+  static int END_YEAR = 2014;
   static boolean isLoaded = true;
   static int pmids_limit = 200;
 
 
-  //TODO: ensure URL connection is estalished only once.
 
   public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-    int i;
-    if(args.length==2) {
+    int i = 0;
+
+    if (args.length == 2) {
       START_YEAR = Integer.parseInt(args[0]);
       END_YEAR = Integer.parseInt(args[1]);
       isLoaded = false;
     }
     //Loading data year by year in different files.
+    System.out.println("Started loading papers...");
     if (!isLoaded) {
       for (i = END_YEAR; i >= START_YEAR; i--) {
         loadPapers(i);
+        System.out.println("Year " + i + " loaded successfully!");
       }
     }
+    System.out.println("...finished loading papers");
     //System.exit(0);
 
-    //TODO:Going through each file and finding twins.
+
     String charset = java.nio.charset.StandardCharsets.UTF_8.name();
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    System.out.println("Started finding twin-papers...");
 
-
-    // use the factory to create a documentBuilder
     DocumentBuilder builder = factory.newDocumentBuilder();
 
     for (int year = END_YEAR; year >= START_YEAR; year--) {
-
+      boolean connectionEstablished = true;
+      long file_pointer = 0;
+      int[] pmids = new int[pmids_limit];
       RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
           "r");
       int end_of_file = 0;
-      int count = 0;
-      int cc = 0;
+      int count;
+      int null_counter = 0;
       FileWriter file_writer = new FileWriter(file_name + year + "output.txt");
       PrintWriter print_writer = new PrintWriter(file_writer, true);
 
       while (true) {
-        long file_pointer = 0;
-        int[] pmids = new int[pmids_limit];
-        count = 0;
-        ++cc;
-        //System.out.println(++cc);
-       try {
-          //do stuff with code, like reading from file
 
-          while (count < pmids_limit) {
-            if (count == (pmids_limit - comp_limit)) {
-              file_pointer = file.getFilePointer();
+
+        try {
+          String url_citations_i;
+          if(connectionEstablished) {
+            count = 0;
+
+            while (count < pmids_limit) {
+              if (count == (pmids_limit - comp_limit)) {
+                file_pointer = file.getFilePointer();
+              }
+              int integer;
+              String str = file.readLine();
+              if (str == null) {
+                end_of_file = 1;
+                break;
+              }
+              integer = Integer.parseInt(str);
+              pmids[count] = integer;
+              //System.out.println(count);
+              count++;
             }
-            int integer;
-            String str = file.readLine();
-            if(str == null) {
-              end_of_file=1;
-              break;
-            }
-            integer = Integer.parseInt(file.readLine());
-//            if(integer==-1) {
-//              end_of_file=1;
-//              break;
-//            }
 
-            pmids[count] = integer;
-
-
-            //System.out.println(count);
-            count++;
           }
-          if(end_of_file==1) {
-            break;
-          }
+          url_citations_i = createURL_citation(pmids);
 
 
-          String url_citations_i = createURL_citation(pmids);
+
 
           URLConnection connection = new URL(url_citations_i).openConnection();
           connection.setRequestProperty("Accept-Charset", charset);
           InputStream response_i = connection.getInputStream();
 
-          // create a new document from input stream
+          if (!connectionEstablished) {
+            System.out.println("***Connection re-established successfully!***");
+            connectionEstablished = true;
+          }
+
           Document doc = builder.parse(response_i);
-
-
-          // get the first element
           Element root = doc.getDocumentElement();
           if (root == null) {
+            null_counter++;
             continue;
           }
+
           NodeList linkSet_List = root.getElementsByTagName("LinkSet");
           if (linkSet_List == null) {
+            null_counter++;
             continue;
           }
-          for (i = 0; i < (pmids_limit - comp_limit); i++) {
+
+          for (i = 0; i < (pmids.length - comp_limit); i++) {
             Element linkSet_i = (Element) linkSet_List.item(i);
             if (linkSet_i == null) {
               continue;
             }
+
             NodeList LinkSetDb_list_i = linkSet_i.getElementsByTagName("LinkSetDb");
             if (LinkSetDb_list_i.getLength() == 0) {
               continue;
             }
+
             Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
             NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
                 ("Link");
@@ -132,22 +136,6 @@ public class getTwins2 {
 
             for (int j = i + 1; j < i + 1 + comp_limit; j++) {
 
-
-//          int PMID_j = Integer.parseInt(file.readLine());
-//          String url_citations_j = createURL_citation(PMID_j);
-//
-//
-//          connection = new URL(url_citations_j).openConnection();
-//          connection.setRequestProperty("Accept-Charset", charset);
-//          //TODO :Exception Handling when connection lost.
-//          InputStream response_j = connection.getInputStream();
-//          doc = builder.parse(response_j);
-//          root = doc.getDocumentElement();
-//
-//          linkSet_List = root.getElementsByTagName("LinkSet");
-//          if (linkSet_List.getLength() == 0) {
-//            continue;
-//          }
               Element linkSet_j = (Element) linkSet_List.item(j);
               if (linkSet_j == null) {
                 continue;
@@ -177,21 +165,34 @@ public class getTwins2 {
               }
 
 
-              //TODO: Compare pmid_i and pmid_j
             }
+          }
+          if (end_of_file == 1) {
+            break;
           }
           file.seek(file_pointer);
 
+        } catch (UnknownHostException e) {
+
+          if (connectionEstablished) {
+            System.out.println("!!!NETWORK CONNECTION LOST!!!");
+            connectionEstablished = false;
+
+          }
 
         } catch (Exception e) {
-          System.out.println(e);
-          System.out.println(cc);
-          System.out.println(year);
 
-          continue;
+
+          System.out.println(e);
+          System.out.println(year + " PMID=" + pmids[1] + " i=" + i);
+          System.out.println("Null Counter= " + null_counter);
+
         }
       }
+      System.out.println("Year " + year + " Null counter = " + null_counter);
+      System.out.println("...finished finding twin-papers for this year!");
     }
+    System.out.println("...all twin-papers found successfully!!");
   }
 
   private static int compareLinkNodes(NodeList link_nodes_i, NodeList link_nodes_j) {
@@ -256,8 +257,16 @@ public class getTwins2 {
       DocumentBuilder builder = factory.newDocumentBuilder();
 
       // create a new document from input stream
-      Document doc = builder.parse(response);
-
+      Document doc;
+      try {
+        doc = builder.parse(response);
+      } catch (Exception e) {
+        System.out.println("Exception occurred while loading papers for " +
+            "year " + year + "!!");
+        System.out.println(e);
+        retstart -= retmax_limit;
+        continue;
+      }
 
       // get the first element
       Element root = doc.getDocumentElement();
@@ -265,7 +274,16 @@ public class getTwins2 {
       // get all child nodes
       NodeList idList_List = root.getElementsByTagName("IdList");
       Element idList_element = (Element) idList_List.item(0);
-      NodeList ids_nodes = idList_element.getElementsByTagName("Id");
+      NodeList ids_nodes;
+      try {
+        ids_nodes = idList_element.getElementsByTagName("Id");
+      } catch (Exception e) {
+        System.out.println("Exception occurred while loading papers for " +
+            "year " + year + "!!");
+        System.out.println(e);
+        retstart -= retmax_limit;
+        continue;
+      }
       if (ids_nodes.getLength() == 0) {
         flag = 0;
       }
