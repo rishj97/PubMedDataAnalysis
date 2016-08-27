@@ -1,5 +1,4 @@
 6395864 and 6395863 with value:14
-6395864 and 6395861 with value:15
 6395863 and 6395862 with value:16
 6395863 and 6395861 with value:17
 6095117 and 6095116 with value:110
@@ -20,7 +19,7 @@
 6085693 and 6085692 with value:7
 6432798 and 6432797 with value:7
 6236976 and 6236975 with value:6
-6472474 and 6472473 with value:39
+6472474 and 6472473 with value:40
 16453548 and 16453547 with value:6
 6488052 and 6488049 with value:5
 6206075 and 6206074 with value:8
@@ -51,7 +50,6 @@
 6740095 and 6740094 with value:5
 6726007 and 6726006 with value:10
 6726006 and 6726003 with value:6
-6721750 and 6721749 with value:13
 6713381 and 6713380 with value:7
 6587775 and 6587774 with value:12
 6717567 and 6717566 with value:77
@@ -70,6 +68,6 @@
 6538754 and 6538753 with value:8
 6439884 and 6439882 with value:5
 6381186 and 6381184 with value:4
-6198085 and 6198084 with value:7
+6198085 and 6198084 with value:8
 6152748 and 6152747 with value:6
 6092854 and 6092853 with value:10

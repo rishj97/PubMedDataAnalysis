@@ -1,5 +1,6 @@
-10032214 and 10032213 with value:10
+10032214 and 10032213 with value:11
 4061988 and 4061987 with value:10
+3907973 and 3907971 with value:12
 2418163 and 2418162 with value:7
 16664482 and 16664481 with value:5
 4073934 and 4073933 with value:6
@@ -8,7 +9,6 @@
 4066076 and 4066075 with value:5
 4052357 and 4052356 with value:6
 4037165 and 4037160 with value:9
-3900907 and 3900906 with value:8
 4050964 and 4050963 with value:4
 4030695 and 4030694 with value:6
 4025657 and 4025656 with value:11
@@ -29,17 +29,16 @@
 2411541 and 2411540 with value:36
 2860298 and 2860297 with value:5
 4016068 and 4016067 with value:11
-3985761 and 3985760 with value:9
+3985761 and 3985760 with value:10
 3857224 and 3857223 with value:4
 2990326 and 2990322 with value:9
 2987311 and 2987310 with value:31
 3884595 and 3884594 with value:15
-3974722 and 3974721 with value:32
+3974722 and 3974721 with value:33
 4011695 and 4011694 with value:7
 3989504 and 3989503 with value:6
-3972866 and 3972865 with value:22
+3972866 and 3972865 with value:24
 3970890 and 3970885 with value:10
-3918018 and 3918017 with value:11
 2982040 and 2982039 with value:8
 2578620 and 2578619 with value:35
 2981214 and 2981213 with value:6
