@@ -1,7 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a5039bb-095d-4659-b5c9-f5a05599b1ce" name="Default" comment="" />
+    <list default="true" id="dfc8713c-0966-4495-a738-b6483036f36a" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ExcelFileReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GetTwins.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MatchAuthors.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/StatsYear.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/reference.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PubMedDataAnalysis/getTwins.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PubMedDataAnalysis/getTwins2.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PubMedDataAnalysis/trial.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/PaperData.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/getTwins2.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/getTwins2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/individualPaperData.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/matchAuthors.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/trial.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1958output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1959output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1960output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1961output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1962output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1963output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1964output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1965output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1966output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1967output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1968output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1969output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1970output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1971output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1972output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1973output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1974output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1975.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1975output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1976output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1977output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1978output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1979output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1980.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1980output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1981.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1981output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1982.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1982output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1983.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1983output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1984.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1984output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1985.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1985output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1986.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1986output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1987.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1987output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1988.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1988output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1989.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1989output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1990.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1990output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1991.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1991output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1992.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1992output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1993.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1993output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1994.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1994output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1995.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1995output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1997output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1998.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1998output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1999.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data1999output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2000.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2000output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2001.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2001output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2002.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2002output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2003.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2003output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2004.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2004output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2005.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2005output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2006.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2006output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2007.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2007output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2008.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2008output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2009.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2009output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2010.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2010output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2011.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2011output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2012.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2012output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2013.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2013output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2014.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2014output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2015.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/year_data2015output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1996.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1996output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1997.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1997output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1998.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1999.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data1999output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data2000.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/year_data2000output.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PubMedDataAnalysis.iml" afterPath="$PROJECT_DIR$/PubMedDataAnalysis.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExcelFileWriter.java" afterPath="$PROJECT_DIR$/src/ExcelFileWriter.java" />
+    </list>
     <ignored path="PubMedDataAnalysis.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -22,26 +144,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="getYear.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/getYear.java">
+      <file leaf-file-name="ExcelFileWriter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ExcelFileWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.88757396">
-              <caret line="40" column="12" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#911#912#0" expanded="true" />
+                <element signature="e#933#934#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GetTwins.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GetTwins.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.38931298">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -51,7 +181,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/getYear.java" />
+        <option value="$PROJECT_DIR$/src/ExcelFileWriter.java" />
+        <option value="$PROJECT_DIR$/src/GetTwins.java" />
       </list>
     </option>
   </component>
@@ -85,13 +216,16 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="PubMedDataAnalysis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -120,30 +254,21 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/poi-3.14" />
+    <property name="findjar.last.used.dir" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Application.getYear">
-    <configuration default="false" name="getYear" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="getYear" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="PubMedDataAnalysis" />
-      <envs />
-      <method />
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -388,22 +513,14 @@
       <listeners />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.getYear" />
-    </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.getYear" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3a5039bb-095d-4659-b5c9-f5a05599b1ce" name="Default" comment="" />
-      <created>1464337533733</created>
+      <changelist id="dfc8713c-0966-4495-a738-b6483036f36a" name="Default" comment="" />
+      <created>1477486026256</created>
       <option name="number" value="Default" />
-      <updated>1464337533733</updated>
+      <updated>1477486026256</updated>
     </task>
     <servers />
   </component>
@@ -413,26 +530,25 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -442,20 +558,113 @@
     <breakpoint-manager />
     <watches-manager />
   </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/getYear.java">
+    <entry file="file://$PROJECT_DIR$/src/ExcelFileWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88757396">
-          <caret line="40" column="12" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#911#912#0" expanded="true" />
+            <element signature="e#933#934#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GetTwins.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38931298">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>PubMedDataAnalysis</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>poi-3</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

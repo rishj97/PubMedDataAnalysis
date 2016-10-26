@@ -1,9 +1,6 @@
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,47 +12,26 @@ import java.io.IOException;
  *
  */
 public class ExcelFileWriter {
+  private String fileName;
+  private Workbook workbook;
+  private Sheet sheet;
+  public ExcelFileWriter(String fileName) {
+    this.fileName = fileName;
+    workbook = new XSSFWorkbook();
+    sheet = workbook.createSheet(fileName);
+  }
 
-  public static void main(String[] args) throws IOException {
-
-    Workbook workbook = new XSSFWorkbook();
-
-    Sheet sheet = workbook.createSheet("Java Books");
-
-    Object[][] bookData = {
-        {"Head First Java", "Kathy Serria", 77},
-        {"Effective Java", "Joshua Bloch", 36},
-        {"Clean Code", "Robert martin", 42},
-        {"Thinking in Java", "Bruce Eckel", 35},
-    };
-
-    int rowCount = 0;
-
-    for (Object[] aBook : bookData) {
-      Row row = sheet.createRow(rowCount++);
-
-      int columnCount = 0;
-
-      for (Object field : aBook) {
-        Cell cell = row.createCell(columnCount++);
-        if (field instanceof String) {
-          cell.setCellValue((String) field);
-        } else if (field instanceof Integer) {
-          cell.setCellValue((Integer) field);
-        }
-      }
-
-    }
-
-    Row row4 = sheet.createRow(4);
-    Cell cel42 = row4.createCell(2);
-    cel42.setCellFormula("SUM(C1:C4)");
-    //cel42.setCellFormula("");
-
-
-    try (FileOutputStream outputStream = new FileOutputStream("JavaBooks.xlsx")) {
+  public void createFile() {
+    try (FileOutputStream outputStream = new FileOutputStream(fileName+"" +
+        ".xlsx")) {
       workbook.write(outputStream);
+    } catch (IOException e) {
+      System.out.println("Failure in createFile");
+      e.printStackTrace();
     }
   }
 
+  public Sheet getSheet() {
+    return sheet;
+  }
 }
