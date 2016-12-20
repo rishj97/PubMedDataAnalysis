@@ -29,7 +29,7 @@ public class ExtractTwins {
    * number of papers each paper is compared to
    */
   static int comp_limit = 5;
-  static int pmids_limit = 650;
+  static int pmids_limit = 600;
 
   static String file_name = "year_data";
 
@@ -265,6 +265,9 @@ public class ExtractTwins {
         count++;
       }
       callNumber++;
+      if(callNumber % 10 == 0) {
+	System.out.println(callNumber);
+      }
       url_citations_i = createURL_citation(pmids);
 
       URLConnection connection = new URL(url_citations_i).openConnection();
