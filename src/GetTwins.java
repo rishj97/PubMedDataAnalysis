@@ -14,7 +14,6 @@ import java.util.Date;
 
 public class GetTwins {
 
-  //TODO: build a helper matcher for 2 pmids for debugging/analysis
   //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?&id=6325451&linkname=pubmed_pubmed,pubmed_pubmed_citedin
 
   static int retstart_init = 0;
@@ -28,7 +27,7 @@ public class GetTwins {
    */
   static int comp_limit = 5;
 
-  static int pmids_limit = 100;
+  static int pmids_limit = 200;
 
   static String file_name = "year_data";
 
@@ -106,8 +105,7 @@ public class GetTwins {
                 file_pointer = file.getFilePointer();
               }
               int integer;
-//              String str = file.readLine();
-              String str = "16337901";
+              String str = file.readLine();
               if (str == null) {
                 end_of_file = 1;
                 break;

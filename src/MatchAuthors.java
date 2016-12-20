@@ -183,8 +183,6 @@ public class MatchAuthors {
 
           int authors1Length = authors1.getLength();
           int authors2Length = authors2.getLength();
-          //System.out.println(authors1.item(0).getTextContent());
-          //System.out.println(authors2.item(0).getTextContent());
           boolean noAuthorCommon = true;
 
           int i, j;

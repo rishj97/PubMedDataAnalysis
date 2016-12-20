@@ -250,30 +250,39 @@ public class ExtractTwins {
   private static HashMap<Integer, InputStream> loadCitationPapers(int year) throws IOException {
     HashMap<Integer, InputStream> citationHashMap = new HashMap<>();
     String charset = java.nio.charset.StandardCharsets.UTF_8.name();
-    String url_citations_i;
-    Scanner file = new Scanner(new File(file_name+year+".txt"));
+    String url_citations_i = null;
+    Scanner file = new Scanner(new File(file_name + year + ".txt"));
     Integer callNumber = 0;
+    boolean reRequest = false;
     while (file.hasNextInt()) {
-      int count = 0;
-      int[] pmids = new int[pmids_limit];
-      while (count < pmids_limit) {
-        if (!file.hasNextInt()) {
-          break;
+      if(!reRequest) {
+        int count = 0;
+        int[] pmids = new int[pmids_limit];
+        while (count < pmids_limit) {
+          if (!file.hasNextInt()) {
+            break;
+          }
+          int integer = file.nextInt();
+          pmids[count] = integer;
+          count++;
         }
-        int integer = file.nextInt();
-        pmids[count] = integer;
-        count++;
+        callNumber++;
+        if (callNumber % 10 == 0) {
+          System.out.println(callNumber);
+        }
+        url_citations_i = createURL_citation(pmids);
       }
-      callNumber++;
-      if(callNumber % 10 == 0) {
-	System.out.println(callNumber);
+      InputStream response_i = null;
+      try {
+        URLConnection connection = new URL(url_citations_i).openConnection();
+        connection.setRequestProperty("Accept-Charset", charset);
+        response_i = connection.getInputStream();
+        reRequest = false;
+
+      } catch (Exception e) {
+        e.printStackTrace();
+        reRequest = true;
       }
-      url_citations_i = createURL_citation(pmids);
-
-      URLConnection connection = new URL(url_citations_i).openConnection();
-      connection.setRequestProperty("Accept-Charset", charset);
-      InputStream response_i = connection.getInputStream();
-
       citationHashMap.put(callNumber, response_i);
     }
 
