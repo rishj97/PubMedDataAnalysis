@@ -14,14 +14,21 @@ import java.util.Date;
 
 public class GetTwins {
 
+  //TODO: build a helper matcher for 2 pmids for debugging/analysis
+  //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?&id=6325451&linkname=pubmed_pubmed,pubmed_pubmed_citedin
+
   static int retstart_init = 0;
-  /** number of PMIDs returned at each call */
+  /**
+   * number of PMIDs returned at each call
+   */
   static int retmax_limit = 10000;
 
-  /** number of papers each paper is compared to */
+  /**
+   * number of papers each paper is compared to
+   */
   static int comp_limit = 5;
 
-  static int pmids_limit = 200;
+  static int pmids_limit = 100;
 
   static String file_name = "year_data";
 
@@ -99,7 +106,8 @@ public class GetTwins {
                 file_pointer = file.getFilePointer();
               }
               int integer;
-              String str = file.readLine();
+//              String str = file.readLine();
+              String str = "16337901";
               if (str == null) {
                 end_of_file = 1;
                 break;
@@ -112,10 +120,13 @@ public class GetTwins {
           }
           url_citations_i = createURL_citation(pmids);
 
+          System.out.println("Called at " + new Date());
 
           URLConnection connection = new URL(url_citations_i).openConnection();
           connection.setRequestProperty("Accept-Charset", charset);
           InputStream response_i = connection.getInputStream();
+
+          System.out.println("Received at " + new Date());
 
           if (!connectionEstablished) {
             System.out.println("***Connection re-established successfully!***"
@@ -156,6 +167,7 @@ public class GetTwins {
             if (link_nodes_i.getLength() <= 5) {
               continue;
             }
+
 
             for (int j = i + 1; j < i + 1 + comp_limit; j++) {
 
@@ -252,13 +264,11 @@ public class GetTwins {
   }
 
   private static String createURL_citation(int[] pmids) {
-    String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
+    String url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
         ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin";
     for (int i = 0; i < pmids.length; i++) {
       url = url + "&id=" + pmids[i];
     }
-    url = url + "&tool=my_tool&email=my_email@example.com";
-
     return url;
   }
 
@@ -294,7 +304,7 @@ public class GetTwins {
       } catch (Exception e) {
         System.out.println("Exception occurred while loading papers for " +
             "year " + year + "!!" + '\t' + '\t' + new Date());
-        System.out.println(e);
+        e.printStackTrace();
         retstart -= retmax_limit;
         continue;
       }
@@ -329,7 +339,7 @@ public class GetTwins {
 
   private static String createURL_esearch(int year, long ret_start) {
 
-    String str = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch" +
+    String str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch" +
         ".fcgi?db=pubmed&term=" + year +
         "[pdat]&retmax=" + retmax_limit + "&retstart=" +
         ret_start;
