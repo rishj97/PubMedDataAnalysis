@@ -36,7 +36,7 @@ public class ExtractTwins {
   static int START_YEAR = 2005;
   static int END_YEAR = 2005;
 
-  static boolean IS_LOADED = false;
+  static boolean IS_LOADED = true;
   static boolean LOAD_ONLY = false;
 
   public static void main(String[] args) throws
@@ -76,15 +76,15 @@ public class ExtractTwins {
     HashMap<Integer, InputStream> citationHashMap = new HashMap<>();
     System.out.println("Started loading citation data..."
         + '\t' + '\t' + new Date());
-    if (!IS_LOADED) {
-      for (i = END_YEAR; i >= START_YEAR; i--) {
-        citationHashMap = loadCitationPapers(i);
-        System.out.println("Year " + i + " citation loaded successfully!"
-            + '\t' + '\t' + new Date());
-      }
+    for (i = END_YEAR; i >= START_YEAR; i--) {
+      citationHashMap = loadCitationPapers(i);
+      System.out.println("Year " + i + " citation loaded successfully!"
+          + '\t' + '\t' + new Date());
     }
     System.out.println("...finished loading citation data"
         + '\t' + '\t' + new Date());
+
+    System.exit(0);
 
 
     String charset = java.nio.charset.StandardCharsets.UTF_8.name();
@@ -251,28 +251,21 @@ public class ExtractTwins {
     HashMap<Integer, InputStream> citationHashMap = new HashMap<>();
     String charset = java.nio.charset.StandardCharsets.UTF_8.name();
     String url_citations_i;
-    Scanner file = new Scanner(file_name + year + ".txt");
+    Scanner file = new Scanner(new File(file_name+year+".txt"));
     Integer callNumber = 0;
-    while (file.hasNextLine()) {
+    while (file.hasNextInt()) {
       int count = 0;
       int[] pmids = new int[pmids_limit];
       while (count < pmids_limit) {
-        int integer;
-        if(!file.hasNextLine()) {
+        if (!file.hasNextInt()) {
           break;
         }
-        String str = file.nextLine();
-        if (str == null) {
-          break;
-        }
-        integer = Integer.parseInt(str);
+        int integer = file.nextInt();
         pmids[count] = integer;
         count++;
       }
       callNumber++;
-
       url_citations_i = createURL_citation(pmids);
-
 
       URLConnection connection = new URL(url_citations_i).openConnection();
       connection.setRequestProperty("Accept-Charset", charset);
