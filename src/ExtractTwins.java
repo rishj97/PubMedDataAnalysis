@@ -9,15 +9,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
  * Created by rishabh on 20/12/16.
  */
 public class ExtractTwins {
+  static String charset = java.nio.charset.StandardCharsets.UTF_8.name();
 
   static int retstart_init = 0;
   /**
@@ -41,13 +41,12 @@ public class ExtractTwins {
 
   public static void main(String[] args) throws
       IOException, ParserConfigurationException, SAXException {
-    int i = 0;
+
     /**
      * arg[0] -- START_YEAR
      * arg[1] -- END_YEAR
-     * arg[2] -- LOAD_ONLY bool
      */
-    if (args.length == 3) {
+    if (args.length == 2) {
       START_YEAR = Integer.parseInt(args[0]);
       END_YEAR = Integer.parseInt(args[1]);
       IS_LOADED = false;
@@ -59,6 +58,7 @@ public class ExtractTwins {
      */
     System.out.println("Started loading papers..."
         + '\t' + '\t' + new Date());
+    int i;
     if (!IS_LOADED) {
       for (i = END_YEAR; i >= START_YEAR; i--) {
         loadPapers(i);
@@ -73,203 +73,41 @@ public class ExtractTwins {
       System.exit(0);
     }
 
-    HashMap<Integer, InputStream> citationHashMap = new HashMap<>();
-    System.out.println("Started loading citation data..."
-        + '\t' + '\t' + new Date());
     for (i = END_YEAR; i >= START_YEAR; i--) {
-      citationHashMap = loadCitationPapers(i);
+      System.out.println("Started loading citation data for " + i + "..."
+          + '\t' + '\t' + new Date());
+      ArrayList<Integer> PMIDs = new ArrayList<>();
+      ArrayList<NodeList> citationData = new ArrayList<>();
+      loadCitationPapers(i, PMIDs, citationData);
       System.out.println("Year " + i + " citation loaded successfully!"
           + '\t' + '\t' + new Date());
+      System.out.println("CITATION SIZE = " + citationData.size());
+      System.out.println("PMIDs SIZE = " + PMIDs.size());
     }
-    System.out.println("...finished loading citation data"
-        + '\t' + '\t' + new Date());
-
-    System.exit(0);
-
-
-    String charset = java.nio.charset.StandardCharsets.UTF_8.name();
-
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    System.out.println("Started finding twin-papers..."
-        + '\t' + '\t' + new Date());
-
-    DocumentBuilder builder = factory.newDocumentBuilder();
-
-    for (int year = END_YEAR; year >= START_YEAR; year--) {
-      boolean connectionEstablished = true;
-      long file_pointer = 0;
-      int[] pmids = new int[pmids_limit];
-      RandomAccessFile file = new RandomAccessFile(file_name + year + ".txt",
-          "r");
-      int end_of_file = 0;
-      int count;
-      int null_counter = 0;
-      FileWriter file_writer = new FileWriter(file_name + year + "output.txt");
-      PrintWriter print_writer = new PrintWriter(file_writer, true);
-
-      while (true) {
-
-        try {
-          String url_citations_i;
-          if (connectionEstablished) {
-            count = 0;
-
-            while (count < pmids_limit) {
-              if (count == (pmids_limit - comp_limit)) {
-                file_pointer = file.getFilePointer();
-              }
-              int integer;
-              String str = file.readLine();
-              if (str == null) {
-                end_of_file = 1;
-                break;
-              }
-              integer = Integer.parseInt(str);
-              pmids[count] = integer;
-              count++;
-            }
-
-          }
-          url_citations_i = createURL_citation(pmids);
-
-          System.out.println("Called at " + new Date());
-
-          URLConnection connection = new URL(url_citations_i).openConnection();
-          connection.setRequestProperty("Accept-Charset", charset);
-          InputStream response_i = connection.getInputStream();
-
-          System.out.println("Received at " + new Date());
-
-          if (!connectionEstablished) {
-            System.out.println("***Connection re-established successfully!***"
-                + '\t' + '\t' + new Date());
-            connectionEstablished = true;
-          }
-
-          Document doc = builder.parse(response_i);
-          Element root = doc.getDocumentElement();
-          if (root == null) {
-            null_counter++;
-            continue;
-          }
-
-          NodeList linkSet_List = root.getElementsByTagName("LinkSet");
-          if (linkSet_List == null) {
-            null_counter++;
-            continue;
-          }
-
-          for (i = 0; i < (pmids.length - comp_limit); i++) {
-            Element linkSet_i = (Element) linkSet_List.item(i);
-            if (linkSet_i == null) {
-              continue;
-            }
-
-            NodeList LinkSetDb_list_i
-                = linkSet_i.getElementsByTagName("LinkSetDb");
-
-            if (LinkSetDb_list_i.getLength() == 0) {
-              continue;
-            }
-
-            Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
-            NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
-                ("Link");
-
-            if (link_nodes_i.getLength() <= 5) {
-              continue;
-            }
-
-
-            for (int j = i + 1; j < i + 1 + comp_limit; j++) {
-
-              Element linkSet_j = (Element) linkSet_List.item(j);
-              if (linkSet_j == null) {
-                continue;
-              }
-              NodeList LinkSetDb_list_j = linkSet_j.getElementsByTagName
-                  ("LinkSetDb");
-              if (LinkSetDb_list_j.getLength() == 0) {
-                continue;
-              }
-              Element linkSetDb_element_j = (Element) LinkSetDb_list_j.item(0);
-              NodeList link_nodes_j = linkSetDb_element_j.getElementsByTagName
-                  ("Link");
-
-              if (link_nodes_j.getLength() <= 5) {
-                continue;
-              }
-
-              int val = compareLinkNodes(link_nodes_i, link_nodes_j);
-              if (val >= 1) {
-                if (val
-                    >= ((link_nodes_i.getLength()
-                    + link_nodes_j.getLength()) / 3)) {
-
-                  print_writer.println(pmids[i] + " and " + pmids[j]
-                      + " with " + "value:" + val);
-
-                }
-              }
-
-
-            }
-          }
-          if (end_of_file == 1) {
-            break;
-          }
-          file.seek(file_pointer);
-
-        } catch (UnknownHostException e) {
-
-          if (connectionEstablished) {
-            System.out.println("!!!NETWORK CONNECTION LOST!!!"
-                + '\t' + '\t' + new Date());
-            connectionEstablished = false;
-
-          }
-
-        } catch (Exception e) {
-
-
-          System.out.println(e);
-          System.out.println(year + " PMID=" + pmids[1] + " i=" + i);
-          System.out.println("Null Counter= " + null_counter
-              + '\t' + '\t' + new Date());
-
-        }
-      }
-      System.out.println("Year " + year + " Null counter = " + null_counter);
-      System.out.println("...finished finding twin-papers for this year!"
-          + '\t' + '\t' + new Date());
-    }
-    System.out.println("...all twin-papers found successfully!!"
-        + '\t' + '\t' + new Date());
   }
 
-  private static HashMap<Integer, InputStream> loadCitationPapers(int year) throws IOException {
-    HashMap<Integer, InputStream> citationHashMap = new HashMap<>();
-    String charset = java.nio.charset.StandardCharsets.UTF_8.name();
+  private static void loadCitationPapers(int year, ArrayList<Integer> PMIDs,
+                                         ArrayList<NodeList> citationData)
+      throws IOException, ParserConfigurationException, SAXException {
+
     String url_citations_i = null;
     Scanner file = new Scanner(new File(file_name + year + ".txt"));
     Integer callNumber = 0;
     boolean reRequest = false;
     while (file.hasNextInt()) {
-      if(!reRequest) {
-        int count = 0;
-        int[] pmids = new int[pmids_limit];
-        while (count < pmids_limit) {
+      int pmidsLength = 0;
+      int[] pmids = new int[pmids_limit];
+      if (!reRequest) {
+        while (pmidsLength < pmids_limit) {
           if (!file.hasNextInt()) {
+            System.out.println("File finished with " + callNumber + " calls.");
             break;
           }
           int integer = file.nextInt();
-          pmids[count] = integer;
-          count++;
+          pmids[pmidsLength] = integer;
+          pmidsLength++;
         }
         callNumber++;
-        if (callNumber % 10 == 0) {
-          System.out.println(callNumber);
-        }
         url_citations_i = createURL_citation(pmids);
       }
       InputStream response_i = null;
@@ -283,11 +121,52 @@ public class ExtractTwins {
         e.printStackTrace();
         reRequest = true;
       }
-      citationHashMap.put(callNumber, response_i);
+      XMLParser xml = null;
+      try {
+        xml = new XMLParser(response_i);
+      } catch (Exception e) {
+        System.out.println("Response invalid " + pmids[0]);
+        continue;
+      }
+      Element root = xml.getRoot();
+      if (root == null) {
+        //TODO: perform informative action
+        continue;
+      }
+      NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+      if (linkSet_List == null) {
+        //TODO: perform informative action
+        continue;
+      }
+      for (int i = 0; i < pmidsLength; i++) {
+        Element linkSet_i = (Element) linkSet_List.item(i);
+        if (linkSet_i == null) {
+          continue;
+        }
+        NodeList id_list_i
+            = linkSet_i.getElementsByTagName("IdList");
+
+        if (id_list_i.getLength() == 0) {
+          continue;
+        }
+        int pmid = Integer.parseInt(id_list_i.item(0).getTextContent());
+
+        NodeList LinkSetDb_list_i
+            = linkSet_i.getElementsByTagName("LinkSetDb");
+
+        if (LinkSetDb_list_i.getLength() == 0) {
+          continue;
+        }
+        Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+        NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+            ("Link");
+
+        if (link_nodes_i.getLength() > 5) {
+          PMIDs.add(pmid);
+          citationData.add(link_nodes_i);
+        }
+      }
     }
-
-
-    return citationHashMap;
   }
 
   private static int compareLinkNodes(NodeList link_nodes_i,
@@ -309,15 +188,6 @@ public class ExtractTwins {
     return val;
   }
 
-  private static String createURL_citation(int pmid) {
-    String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
-        ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin&id=" + pmid +
-        "&tool" +
-        "=my_tool&email=my_email@example.com";
-
-    return url;
-  }
-
   private static String createURL_citation(int[] pmids) {
     String url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
         ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin";
@@ -329,8 +199,6 @@ public class ExtractTwins {
 
   private static void loadPapers(int year) throws IOException,
       ParserConfigurationException, SAXException {
-
-    String charset = java.nio.charset.StandardCharsets.UTF_8.name();
 
     FileWriter file_writer = new FileWriter(file_name + year + ".txt");
     PrintWriter print_writer = new PrintWriter(file_writer, true);
