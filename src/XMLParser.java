@@ -14,15 +14,21 @@ import java.io.InputStream;
 public class XMLParser {
   final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
   DocumentBuilder builder;
+
+  private Document doc;
   private Element root;
 
   public XMLParser(InputStream response) throws ParserConfigurationException, IOException, SAXException {
     builder = factory.newDocumentBuilder();
-    Document doc = builder.parse(response);
+    doc = builder.parse(response);
     root = doc.getDocumentElement();
   }
 
   public Element getRoot() {
     return root;
+  }
+
+  public Document getDoc() {
+    return doc;
   }
 }
