@@ -94,128 +94,312 @@ public class ExtractTwins {
       throws FileNotFoundException {
 
     int numPapers = 0;
+    boolean openNewFile;
+    int fileNumber = 1;
+
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = null;
+    Document doc;
+    Element rootElement;
 
     try {
+      docBuilder = docFactory.newDocumentBuilder();
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+    }
 
-      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder docBuilder = null;
-      try {
-        docBuilder = docFactory.newDocumentBuilder();
-      } catch (ParserConfigurationException e) {
-        e.printStackTrace();
-      }
+    // root elements
+    doc = docBuilder.newDocument();
+    rootElement = doc.createElement("CitationData");
+    doc.appendChild(rootElement);
 
-      // root elements
-      Document doc = docBuilder.newDocument();
-      Element rootElement = doc.createElement("CitationData");
-      doc.appendChild(rootElement);
+    openNewFile = false;
 
-      String url_citations_i = null;
-      Scanner file = new Scanner(new File(file_name + year + ".txt"));
-      Integer callNumber = 0;
-      boolean reRequest = false;
-      while (file.hasNextInt()) {
-        int pmidsLength = 0;
-        int[] pmids = new int[pmids_limit];
-        if (!reRequest) {
-          while (pmidsLength < pmids_limit) {
-            if (!file.hasNextInt()) {
-              System.out.println("File finished with " + callNumber + " calls.");
-              break;
-            }
-            int integer = file.nextInt();
-            pmids[pmidsLength] = integer;
-            pmidsLength++;
-          }
-          callNumber++;
-          url_citations_i = createURL_citation(pmids);
-        }
-        InputStream response_i = null;
+    String url_citations_i = null;
+    Scanner file = new Scanner(new File(file_name + year + ".txt"));
+    Integer callNumber = 0;
+    boolean reRequest = false;
+    while (file.hasNextInt()) {
+      if (openNewFile) {
+        openNewFile = false;
+
+        //close previous file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = null;
         try {
-          URLConnection connection = new URL(url_citations_i).openConnection();
-          connection.setRequestProperty("Accept-Charset", charset);
-          response_i = connection.getInputStream();
-          reRequest = false;
-
-        } catch (Exception e) {
+          transformer = transformerFactory.newTransformer();
+        } catch (TransformerConfigurationException e) {
           e.printStackTrace();
-          reRequest = true;
         }
-        XMLParser xml;
-        try {
-          xml = new XMLParser(response_i);
-        } catch (Exception e) {
-          System.out.println("Response invalid " + pmids[0]);
-          continue;
-        }
-        Element root = xml.getRoot();
-        if (root == null) {
-          //TODO: perform informative action
-          continue;
-        }
-        NodeList linkSet_List = root.getElementsByTagName("LinkSet");
-        if (linkSet_List == null) {
-          //TODO: perform informative action
-          continue;
-        }
-        for (int i = 0; i < pmidsLength; i++) {
-          Element linkSet_i = (Element) linkSet_List.item(i);
-          if (linkSet_i == null) {
-            continue;
-          }
-          NodeList id_list_i
-              = linkSet_i.getElementsByTagName("IdList");
-
-          if (id_list_i.getLength() == 0) {
-            continue;
-          }
-          int pmid = Integer.parseInt(id_list_i.item(0).getTextContent());
-
-          NodeList LinkSetDb_list_i
-              = linkSet_i.getElementsByTagName("LinkSetDb");
-
-          if (LinkSetDb_list_i.getLength() == 0) {
-            continue;
-          }
-          Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
-          NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
-              ("Link");
-
-          if (link_nodes_i.getLength() > 5) {
-            Node firstDocImportedNode = doc.importNode(linkSet_i, true);
-            rootElement.appendChild(firstDocImportedNode);
-            numPapers++;
-          }
-        }
-        System.out.println("call done " + new Date());
-      }
-      // write the content into xml file
-      TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      Transformer transformer = null;
-      try {
-        transformer = transformerFactory.newTransformer();
-      } catch (TransformerConfigurationException e) {
-        e.printStackTrace();
-      }
-      DOMSource source = new DOMSource(doc);
-      String name = "year" + year + "Citation.xml";
-      StreamResult result = new StreamResult(new File(name));
+        DOMSource source = new DOMSource(doc);
+        String name = "year" + year + "Citation" + fileNumber + ".xml";
+        System.out.println("Closing file " + name + " ..."
+            + '\t' + '\t' + new Date());
+        System.out.println("Number of papers loaded = " + numPapers);
+        fileNumber++;
+        StreamResult result = new StreamResult(new File(name));
 
 //       Output to console for testing
 //       StreamResult result = new StreamResult(System.out);
 
-      try {
-        transformer.transform(source, result);
-      } catch (TransformerException e) {
-        e.printStackTrace();
+        try {
+          transformer.transform(source, result);
+        } catch (TransformerException e) {
+          e.printStackTrace();
+        }
+
+
+        //create new file
+        System.out.println("Opening new file..."
+            + '\t' + '\t' + new Date());
+        System.out.println("Number of papers loaded = " + numPapers);
+        try {
+          docBuilder = docFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+          e.printStackTrace();
+        }
+
+        // root elements
+        doc = docBuilder.newDocument();
+        rootElement = doc.createElement("CitationData");
+        doc.appendChild(rootElement);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("NumPapers loaded = " + numPapers);
+      int pmidsLength = 0;
+      int[] pmids = new int[pmids_limit];
+      if (!reRequest) {
+        while (pmidsLength < pmids_limit) {
+          if (!file.hasNextInt()) {
+            System.out.println("File finished with " + callNumber + " calls " +
+                "and " + (fileNumber) + " files");
+            System.out.println("Number of papers loaded = " + numPapers);
+            break;
+          }
+          int integer = file.nextInt();
+          pmids[pmidsLength] = integer;
+          pmidsLength++;
+        }
+        callNumber++;
+        url_citations_i = createURL_citation(pmids);
+      }
+      InputStream response_i = null;
+      try {
+        URLConnection connection = new URL(url_citations_i).openConnection();
+        connection.setRequestProperty("Accept-Charset", charset);
+        response_i = connection.getInputStream();
+        reRequest = false;
+
+      } catch (Exception e) {
+        e.printStackTrace();
+        reRequest = true;
+      }
+      XMLParser xml;
+      try {
+        xml = new XMLParser(response_i);
+      } catch (Exception e) {
+        System.out.println("Response invalid " + pmids[0]);
+        continue;
+      }
+      Element root = xml.getRoot();
+      if (root == null) {
+        //TODO: perform informative action
+        continue;
+      }
+      NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+      if (linkSet_List == null) {
+        //TODO: perform informative action
+        continue;
+      }
+      for (int i = 0; i < pmidsLength; i++) {
+        Element linkSet_i = (Element) linkSet_List.item(i);
+        if (linkSet_i == null) {
+          continue;
+        }
+        NodeList id_list_i
+            = linkSet_i.getElementsByTagName("IdList");
+
+        if (id_list_i.getLength() == 0) {
+          continue;
+        }
+        int pmid = Integer.parseInt(id_list_i.item(0).getTextContent());
+
+        NodeList LinkSetDb_list_i
+            = linkSet_i.getElementsByTagName("LinkSetDb");
+
+        if (LinkSetDb_list_i.getLength() == 0) {
+          continue;
+        }
+        Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+        NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+            ("Link");
+
+        if (link_nodes_i.getLength() > 5) {
+          try {
+            Node firstDocImportedNode = doc.importNode(linkSet_i, true);
+            rootElement.appendChild(firstDocImportedNode);
+            numPapers++;
+          } catch (java.lang.OutOfMemoryError error) {
+            System.out.println("Out of Memory Error Occurred");
+            System.out.println("Number of papers loaded = " + numPapers);
+            openNewFile = true;
+          }
+        }
+      }
+      if (callNumber % 300 == 0) {
+        openNewFile = true;
+      }
     }
+    // write the content into xml file
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = null;
+    try {
+      transformer = transformerFactory.newTransformer();
+    } catch (TransformerConfigurationException e) {
+      e.printStackTrace();
+    }
+    DOMSource source = new DOMSource(doc);
+    String name = "year" + year + "Citation" + fileNumber + ".xml";
+    fileNumber++;
+    StreamResult result = new StreamResult(new File(name));
+
+//       Output to console for testing
+//       StreamResult result = new StreamResult(System.out);
+
+    try {
+      transformer.transform(source, result);
+    } catch (TransformerException e) {
+      e.printStackTrace();
+    }
+    System.out.println("Number of papers loaded = " + numPapers);
 
 
   }
+
+//  private static void loadCitationPapers(int year)
+//      throws FileNotFoundException {
+//
+//    int numPapers = 0;
+//
+//    try {
+//
+//      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//      DocumentBuilder docBuilder = null;
+//      try {
+//        docBuilder = docFactory.newDocumentBuilder();
+//      } catch (ParserConfigurationException e) {
+//        e.printStackTrace();
+//      }
+//
+//      // root elements
+//      Document doc = docBuilder.newDocument();
+//      Element rootElement = doc.createElement("CitationData");
+//      doc.appendChild(rootElement);
+//
+//      String url_citations_i = null;
+//      Scanner file = new Scanner(new File(file_name + year + ".txt"));
+//      Integer callNumber = 0;
+//      boolean reRequest = false;
+//      while (file.hasNextInt()) {
+//        int pmidsLength = 0;
+//        int[] pmids = new int[pmids_limit];
+//        if (!reRequest) {
+//          while (pmidsLength < pmids_limit) {
+//            if (!file.hasNextInt()) {
+//              System.out.println("File finished with " + callNumber + " calls.");
+//              break;
+//            }
+//            int integer = file.nextInt();
+//            pmids[pmidsLength] = integer;
+//            pmidsLength++;
+//          }
+//          callNumber++;
+//          url_citations_i = createURL_citation(pmids);
+//        }
+//        InputStream response_i = null;
+//        try {
+//          URLConnection connection = new URL(url_citations_i).openConnection();
+//          connection.setRequestProperty("Accept-Charset", charset);
+//          response_i = connection.getInputStream();
+//          reRequest = false;
+//
+//        } catch (Exception e) {
+//          e.printStackTrace();
+//          reRequest = true;
+//        }
+//        XMLParser xml;
+//        try {
+//          xml = new XMLParser(response_i);
+//        } catch (Exception e) {
+//          System.out.println("Response invalid " + pmids[0]);
+//          continue;
+//        }
+//        Element root = xml.getRoot();
+//        if (root == null) {
+//          //TODO: perform informative action
+//          continue;
+//        }
+//        NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+//        if (linkSet_List == null) {
+//          //TODO: perform informative action
+//          continue;
+//        }
+//        for (int i = 0; i < pmidsLength; i++) {
+//          Element linkSet_i = (Element) linkSet_List.item(i);
+//          if (linkSet_i == null) {
+//            continue;
+//          }
+//          NodeList id_list_i
+//              = linkSet_i.getElementsByTagName("IdList");
+//
+//          if (id_list_i.getLength() == 0) {
+//            continue;
+//          }
+//          int pmid = Integer.parseInt(id_list_i.item(0).getTextContent());
+//
+//          NodeList LinkSetDb_list_i
+//              = linkSet_i.getElementsByTagName("LinkSetDb");
+//
+//          if (LinkSetDb_list_i.getLength() == 0) {
+//            continue;
+//          }
+//          Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+//          NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+//              ("Link");
+//
+//          if (link_nodes_i.getLength() > 5) {
+//            Node firstDocImportedNode = doc.importNode(linkSet_i, true);
+//            rootElement.appendChild(firstDocImportedNode);
+//            numPapers++;
+//          }
+//        }
+//        System.out.println("call done " + new Date());
+//      }
+//      // write the content into xml file
+//      TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//      Transformer transformer = null;
+//      try {
+//        transformer = transformerFactory.newTransformer();
+//      } catch (TransformerConfigurationException e) {
+//        e.printStackTrace();
+//      }
+//      DOMSource source = new DOMSource(doc);
+//      String name = "year" + year + "Citation.xml";
+//      StreamResult result = new StreamResult(new File(name));
+//
+////       Output to console for testing
+////       StreamResult result = new StreamResult(System.out);
+//
+//      try {
+//        transformer.transform(source, result);
+//      } catch (TransformerException e) {
+//        e.printStackTrace();
+//      }
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      System.out.println("NumPapers loaded = " + numPapers);
+//    }
+//
+//
+//  }
 
   private static int compareLinkNodes(NodeList link_nodes_i,
                                       NodeList link_nodes_j) {
