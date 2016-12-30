@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class ExtractTwins {
   /**
    * number of papers each paper is compared to
    */
-  static int comp_limit = 5;
+  static int comp_limit = 4;
   static int pmids_limit = 600;
 
   static String file_name = "year_data";
@@ -80,6 +81,155 @@ public class ExtractTwins {
     }
 
     for (year = END_YEAR; year >= START_YEAR; year--) {
+      Scanner file = new Scanner(new File(file_name + year + ".txt"));
+      while (file.hasNextInt()) {
+        ArrayList<Integer> pmids = new ArrayList<>();
+        int pmidsLength = 0;
+        while (file.hasNextInt()) {
+          int pmid = file.nextInt();
+          pmids.add(pmid);
+          pmidsLength++;
+          if (pmidsLength == 120) {
+            break;
+          }
+        }
+        String url = createURL_similarArticles(pmids);
+        InputStream response = null;
+        try {
+          response = getResponse(url);
+        } catch (Exception e) {
+          //TODO:Do Something
+        }
+
+        XMLParser xml;
+        try {
+          xml = new XMLParser(response);
+        } catch (Exception e) {
+          System.out.println("Response invalid " + pmids.get(0));
+          continue;
+        }
+
+        Element root = xml.getRoot();
+        if (root == null) {
+          //TODO: perform informative action
+          continue;
+        }
+
+
+        NodeList linkSet_List = root.getElementsByTagName("LinkSet");
+        if (linkSet_List == null) {
+          //TODO: perform informative action
+          continue;
+        }
+        ArrayList<Integer> pmidsCitation = new ArrayList<>();
+        for (int i = 0; i < pmids.size(); i++) {
+          Element linkSet_i = (Element) linkSet_List.item(0);
+          NodeList LinkSetDb_list_i
+              = linkSet_i.getElementsByTagName("LinkSetDb");
+
+          if (LinkSetDb_list_i.getLength() == 0) {
+            continue;
+          }
+          Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+          NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+              ("Link");
+          for (int j = 0; j < 5; j++) {
+            pmidsCitation.add(Integer.valueOf(link_nodes_i.item(j)
+                .getTextContent()));
+          }
+        }
+        url = createURL_citation(pmids);
+        response = null;
+        try {
+          response = getResponse(url);
+        } catch (Exception e) {
+          //TODO: Do Something
+        }
+        try {
+          xml = new XMLParser(response);
+        } catch (Exception e) {
+          System.out.println("Response invalid " + pmids.get(0));
+          continue;
+        }
+        root = xml.getRoot();
+        if (root == null) {
+          //TODO: perform informative action
+          continue;
+        }
+
+        linkSet_List = root.getElementsByTagName("LinkSet");
+        if (linkSet_List == null) {
+          //TODO: perform informative action
+          continue;
+        }
+
+        for (int i = 0; i < (pmidsCitation.size() - comp_limit); i+=5) {
+          Element linkSet_i = (Element) linkSet_List.item(i);
+          if (linkSet_i == null) {
+            //TODO: perform informative action
+            continue;
+          }
+
+          NodeList LinkSetDb_list_i
+              = linkSet_i.getElementsByTagName("LinkSetDb");
+
+          if (LinkSetDb_list_i.getLength() == 0) {
+            continue;
+          }
+
+          Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
+          NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
+              ("Link");
+
+          if (link_nodes_i.getLength() <= 5) {
+            continue;
+          }
+
+
+          for (int j = i + 1; j < i + 1 + comp_limit; j++) {
+
+            Element linkSet_j = (Element) linkSet_List.item(j);
+            if (linkSet_j == null) {
+              continue;
+            }
+            NodeList LinkSetDb_list_j = linkSet_j.getElementsByTagName
+                ("LinkSetDb");
+            if (LinkSetDb_list_j.getLength() == 0) {
+              continue;
+            }
+            Element linkSetDb_element_j = (Element) LinkSetDb_list_j.item(0);
+            NodeList link_nodes_j = linkSetDb_element_j.getElementsByTagName
+                ("Link");
+
+            if (link_nodes_j.getLength() <= 5) {
+              continue;
+            }
+
+            int val = compareLinkNodes(link_nodes_i, link_nodes_j);
+            if (val >= 1) {
+              if (val
+                  >= ((link_nodes_i.getLength()
+                  + link_nodes_j.getLength()) / (double) 3)) {
+
+                System.out.println(pmidsCitation.get(i) + " and " +
+                    pmidsCitation.get(j)
+                    + " with " + "value:" + val);
+
+              }
+            }
+
+
+          }
+        }
+
+      }
+    }
+
+
+    System.exit(0);
+    for (year = END_YEAR; year >= START_YEAR; year--)
+
+    {
       System.out.println("Started loading citation data for " + year + "..."
           + '\t' + '\t' + new Date());
 
@@ -88,6 +238,22 @@ public class ExtractTwins {
       System.out.println("Year " + year + " citation loaded successfully!"
           + '\t' + '\t' + new Date());
     }
+
+  }
+
+  private static InputStream getResponse(String url) throws IOException {
+    URLConnection connection = new URL(url).openConnection();
+    connection.setRequestProperty("Accept-Charset", charset);
+    return connection.getInputStream();
+  }
+
+  private static String createURL_similarArticles(ArrayList<Integer> pmids) {
+    String url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?";
+    for (int pmid : pmids) {
+      url += "&id=" + pmid;
+    }
+    url += "&linkname=pubmed_pubmed_five";
+    return url;
   }
 
   private static void loadCitationPapers(int year)
@@ -425,6 +591,15 @@ public class ExtractTwins {
         ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin";
     for (int i = 0; i < pmids.length; i++) {
       url = url + "&id=" + pmids[i];
+    }
+    return url;
+  }
+
+  private static String createURL_citation(ArrayList pmids) {
+    String url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink" +
+        ".fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin";
+    for (int i = 0; i < pmids.size(); i++) {
+      url = url + "&id=" + pmids.get(i);
     }
     return url;
   }
