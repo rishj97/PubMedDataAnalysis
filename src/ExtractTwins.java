@@ -134,8 +134,12 @@ public class ExtractTwins {
           NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
               ("Link");
           for (int j = 0; j < 5; j++) {
-            pmidsCitation.add(Integer.valueOf(link_nodes_i.item(j)
-                .getTextContent()));
+            try {
+              pmidsCitation.add(Integer.valueOf(link_nodes_i.item(j)
+                  .getTextContent()));
+            } catch(Exception e) {
+              pmidsCitation.add(19995734);
+            }
           }
         }
         url = createURL_citation(pmids);
