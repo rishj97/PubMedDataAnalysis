@@ -621,31 +621,25 @@ public class ExtractTwins {
       String url = createURL_esearch(year, retstart);
       retstart += retmax_limit;
 
-      URLConnection connection = new URL(url).openConnection();
-      connection.setRequestProperty("Accept-Charset", charset);
-      InputStream response = connection.getInputStream();
-
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      InputStream response = null;
+      XMLParser xmlParser = null;
 
 
-      // use the factory to create a documentBuilder
-      DocumentBuilder builder = factory.newDocumentBuilder();
-
-      // create a new document from input stream
-      Document doc;
       try {
-        doc = builder.parse(response);
+        response = getResponse(url);
+        xmlParser = new XMLParser(response);
       } catch (Exception e) {
-        System.out.println("Exception occurred while loading papers for " +
-            "year " + year + "!!" + '\t' + '\t' + new Date());
+        System.out.println("Exception occurred when getting response while " +
+            "loading papers for " +
+            "year " + year + "!!" + '\t' + '\t' + new Date
+            ());
         e.printStackTrace();
         retstart -= retmax_limit;
         continue;
       }
 
       // get the first element
-      Element root = doc.getDocumentElement();
-
+      Element root = xmlParser.getRoot();
 
       // get all child nodes
       NodeList idList_List = root.getElementsByTagName("IdList");
@@ -654,10 +648,11 @@ public class ExtractTwins {
       try {
         ids_nodes = idList_element.getElementsByTagName("Id");
       } catch (Exception e) {
-        System.out.println("Exception occurred while loading papers for " +
+        System.out.println("Exception occurred when reading response while " +
+            "loading papers for " +
             "year " + year + "!!" + '\t' + '\t' + new Date());
-        System.out.println(e);
-        retstart -= retmax_limit;
+        e.printStackTrace();
+//        retstart -= retmax_limit;
         continue;
       }
       if (ids_nodes.getLength() == 0) {
