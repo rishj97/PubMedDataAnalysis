@@ -35,7 +35,7 @@ public class ExtractTwins {
   /**
    * number of papers each paper is compared to
    */
-  static int comp_limit = 4;
+  static int comp_limit = 10;
   static int pmids_limit = 600;
 
   static String file_name = "year_data";
@@ -89,7 +89,7 @@ public class ExtractTwins {
           int pmid = file.nextInt();
           pmids.add(pmid);
           pmidsLength++;
-          if (pmidsLength == 120) {
+          if (pmidsLength == pmids_limit/comp_limit) {
             break;
           }
         }
@@ -133,12 +133,12 @@ public class ExtractTwins {
           Element linkSetDb_element_i = (Element) LinkSetDb_list_i.item(0);
           NodeList link_nodes_i = linkSetDb_element_i.getElementsByTagName
               ("Link");
-          for (int j = 0; j < 5; j++) {
+          for (int j = 0; j < comp_limit; j++) {
             try {
               pmidsCitation.add(Integer.valueOf(link_nodes_i.item(j)
                   .getTextContent()));
-            } catch(Exception e) {
-              pmidsCitation.add(19995734);
+            } catch (Exception e) {
+              pmidsCitation.add(11111111);
             }
           }
         }
@@ -167,7 +167,8 @@ public class ExtractTwins {
           continue;
         }
 
-        for (int i = 0; i < (pmidsCitation.size() - comp_limit); i+=5) {
+        for (int i = 0; i <= (pmidsCitation.size() - comp_limit);
+             i += comp_limit) {
           Element linkSet_i = (Element) linkSet_List.item(i);
           if (linkSet_i == null) {
             //TODO: perform informative action
@@ -190,7 +191,7 @@ public class ExtractTwins {
           }
 
 
-          for (int j = i + 1; j < i + 1 + comp_limit; j++) {
+          for (int j = i + 1; j < i + comp_limit; j++) {
 
             Element linkSet_j = (Element) linkSet_List.item(j);
             if (linkSet_j == null) {
@@ -256,7 +257,7 @@ public class ExtractTwins {
     for (int pmid : pmids) {
       url += "&id=" + pmid;
     }
-    url += "&linkname=pubmed_pubmed_five";
+    url += "&linkname=pubmed_pubmed";
     return url;
   }
 
