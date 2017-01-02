@@ -89,7 +89,7 @@ public class ExtractTwins {
           int pmid = file.nextInt();
           pmids.add(pmid);
           pmidsLength++;
-          if (pmidsLength == pmids_limit/comp_limit) {
+          if (pmidsLength == pmids_limit / comp_limit) {
             break;
           }
         }
@@ -652,6 +652,7 @@ public class ExtractTwins {
         System.out.println("Exception occurred when reading response while " +
             "loading papers for " +
             "year " + year + "!!" + '\t' + '\t' + new Date());
+        System.out.println(url);
         e.printStackTrace();
 //        retstart -= retmax_limit;
         continue;
