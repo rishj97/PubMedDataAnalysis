@@ -277,68 +277,68 @@ public class GetTwins {
 
     FileWriter file_writer = new FileWriter(file_name + year + ".txt");
     PrintWriter print_writer = new PrintWriter(file_writer, true);
+    for (int month = 1; month <= 12; month++) {
+      int flag = 1;
+      long retstart = retstart_init;
+      while (flag == 1) {
+        String url = createURL_esearch(year, month, retstart);
+        retstart += retmax_limit;
+
+        URLConnection connection = new URL(url).openConnection();
+        connection.setRequestProperty("Accept-Charset", charset);
+        InputStream response = connection.getInputStream();
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 
-    int flag = 1;
-    long retstart = retstart_init;
-    while (flag == 1) {
-      String url = createURL_esearch(year, retstart);
-      retstart += retmax_limit;
+        // use the factory to create a documentBuilder
+        DocumentBuilder builder = factory.newDocumentBuilder();
 
-      URLConnection connection = new URL(url).openConnection();
-      connection.setRequestProperty("Accept-Charset", charset);
-      InputStream response = connection.getInputStream();
+        // create a new document from input stream
+        Document doc;
+        try {
+          doc = builder.parse(response);
+        } catch (Exception e) {
+          System.out.println("Exception occurred while loading papers for " +
+              "year " + year + "!!" + '\t' + '\t' + new Date());
+          e.printStackTrace();
+          retstart -= retmax_limit;
+          continue;
+        }
 
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // get the first element
+        Element root = doc.getDocumentElement();
 
+        // get all child nodes
+        NodeList idList_List = root.getElementsByTagName("IdList");
+        Element idList_element = (Element) idList_List.item(0);
+        NodeList ids_nodes;
+        try {
+          ids_nodes = idList_element.getElementsByTagName("Id");
+        } catch (Exception e) {
+          System.out.println("Exception occurred while loading papers for " +
+              "year " + year + "!!" + '\t' + '\t' + new Date());
+          System.out.println(e);
+          retstart -= retmax_limit;
+          continue;
+        }
+        if (ids_nodes.getLength() == 0) {
+          flag = 0;
+        }
+        for (int j = 0; j < ids_nodes.getLength(); j++) {
+          Element e = (Element) ids_nodes.item(j);
+          print_writer.printf("%s" + "%n", e.getTextContent());
+        }
 
-      // use the factory to create a documentBuilder
-      DocumentBuilder builder = factory.newDocumentBuilder();
-
-      // create a new document from input stream
-      Document doc;
-      try {
-        doc = builder.parse(response);
-      } catch (Exception e) {
-        System.out.println("Exception occurred while loading papers for " +
-            "year " + year + "!!" + '\t' + '\t' + new Date());
-        e.printStackTrace();
-        retstart -= retmax_limit;
-        continue;
       }
-
-      // get the first element
-      Element root = doc.getDocumentElement();
-
-      // get all child nodes
-      NodeList idList_List = root.getElementsByTagName("IdList");
-      Element idList_element = (Element) idList_List.item(0);
-      NodeList ids_nodes;
-      try {
-        ids_nodes = idList_element.getElementsByTagName("Id");
-      } catch (Exception e) {
-        System.out.println("Exception occurred while loading papers for " +
-            "year " + year + "!!" + '\t' + '\t' + new Date());
-        System.out.println(e);
-        retstart -= retmax_limit;
-        continue;
-      }
-      if (ids_nodes.getLength() == 0) {
-        flag = 0;
-      }
-      for (int j = 0; j < ids_nodes.getLength(); j++) {
-        Element e = (Element) ids_nodes.item(j);
-        print_writer.printf("%s" + "%n", e.getTextContent());
-      }
-
     }
     print_writer.close();
   }
 
-  private static String createURL_esearch(int year, long ret_start) {
+  private static String createURL_esearch(int year, int month, long ret_start) {
 
     String str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch" +
-        ".fcgi?db=pubmed&term=" + year +
+        ".fcgi?db=pubmed&term=" + year + "/" + month +
         "[pdat]&retmax=" + retmax_limit + "&retstart=" +
         ret_start;
     return str;
