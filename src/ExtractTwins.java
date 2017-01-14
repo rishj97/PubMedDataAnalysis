@@ -82,8 +82,9 @@ public class ExtractTwins {
             }
           }
           url = createURL_similarArticles(pmids);
-        }
-
+        } else {
+	  comeAgain = false;
+   	}
         InputStream response;
         try {
           response = getResponse(url);
