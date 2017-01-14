@@ -65,6 +65,7 @@ public class ExtractTwins {
         + '\t' + '\t' + new Date());
 
     for (year = END_YEAR; year >= START_YEAR; year--) {
+      PrintWriter writer = new PrintWriter("output" + year + ".txt", "UTF-8");
       Scanner file = new Scanner(new File(FILE_NAME + year + ".txt"));
       System.out.println("Started finding twin-papers for " + year + "..."
           + '\t' + '\t' + new Date());
@@ -83,8 +84,8 @@ public class ExtractTwins {
           }
           url = createURL_similarArticles(pmids);
         } else {
-	  comeAgain = false;
-   	}
+          comeAgain = false;
+        }
         InputStream response;
         try {
           response = getResponse(url);
@@ -212,18 +213,17 @@ public class ExtractTwins {
                   >= ((link_nodes_i.getLength()
                   + link_nodes_j.getLength()) / (double) 3)) {
 
-                System.out.println(pmidsCitation.get(i) + " and " +
+                writer.println(pmidsCitation.get(i) + " and " +
                     pmidsCitation.get(j)
                     + " with " + "value:" + val);
-
               }
             }
           }
         }
-
       }
       System.out.println("...finished finding twin-papers for " + year
           + '\t' + '\t' + new Date());
+      writer.close();
     }
   }
 
