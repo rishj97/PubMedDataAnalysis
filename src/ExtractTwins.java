@@ -138,7 +138,7 @@ public class ExtractTwins {
             }
           }
         }
-        url = createURL_citation(pmids);
+        url = createURL_citation(pmidsCitation);
         try {
           response = getResponse(url);
         } catch (Exception e) {
@@ -164,7 +164,6 @@ public class ExtractTwins {
           //TODO: perform informative action
           continue;
         }
-
         for (int i = 0; i <= (pmidsCitation.size() - COMP_LIMIT);
              i += COMP_LIMIT) {
           Element linkSet_i = (Element) linkSet_List.item(i);
@@ -233,9 +232,9 @@ public class ExtractTwins {
     return connection.getInputStream();
   }
 
-  private static String createURL_similarArticles(ArrayList<Integer> pmids) {
+  private static String createURL_similarArticles(ArrayList pmids) {
     String url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?";
-    for (int pmid : pmids) {
+    for (Object pmid : pmids) {
       url += "&id=" + pmid;
     }
     url += "&linkname=pubmed_pubmed";
