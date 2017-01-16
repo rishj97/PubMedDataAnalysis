@@ -118,7 +118,7 @@ public class ExtractTwins {
         }
         ArrayList<Integer> pmidsCitation = new ArrayList<>();
         for (int i = 0; i < pmids.size(); i++) {
-          Element linkSet_i = (Element) linkSet_List.item(0);
+          Element linkSet_i = (Element) linkSet_List.item(i);
           NodeList LinkSetDb_list_i
               = linkSet_i.getElementsByTagName("LinkSetDb");
 
