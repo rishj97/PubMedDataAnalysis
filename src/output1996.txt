@@ -1,0 +1,5 @@
+8557269 and 11369056 with value:40
+8619885 and 8937424 with value:56
+8661115 and 8661114 with value:8
+8942704 and 8942703 with value:10
+8987160 and 9156415 with value:51

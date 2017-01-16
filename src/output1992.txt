@@ -1,0 +1,10 @@
+1564111 and 2127781 with value:52
+1531825 and 1531824 with value:6
+1531825 and 1531826 with value:5
+1373458 and 7505520 with value:6
+1500346 and 1500345 with value:4
+27858475 and 1421987 with value:265
+1425296 and 38192 with value:48
+1400258 and 7847890 with value:32
+1358756 and 8422989 with value:37
+1486571 and 2743817 with value:5

@@ -1,0 +1,10 @@
+11647991 and 11656220 with value:14
+7780593 and 7866527 with value:7
+7758660 and 8943402 with value:7
+7713780 and 9614886 with value:67
+7761090 and 9020193 with value:9
+7549665 and 8819689 with value:10
+7501039 and 7501040 with value:7
+7472453 and 9875263 with value:47
+8588749 and 3623303 with value:5
+7493332 and 11393758 with value:9

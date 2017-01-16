@@ -1,0 +1,10 @@
+2300726 and 1028891 with value:9
+2308157 and 2308156 with value:7
+2286728 and 2286726 with value:8
+2311828 and 1731826 with value:39
+2390488 and 9590501 with value:6
+2209422 and 3188985 with value:166
+2402468 and 2402459 with value:10
+2231186 and 9226134 with value:17
+2272954 and 6441191 with value:19
+2175877 and 7590280 with value:5

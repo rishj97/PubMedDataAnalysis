@@ -1,0 +1,10 @@
+3146543 and 2111748 with value:6
+2964278 and 2525562 with value:116
+2964000 and 6096214 with value:92
+2964000 and 6215553 with value:92
+16453833 and 7713435 with value:6
+3409285 and 9304414 with value:103
+3175672 and 8933707 with value:6
+3144776 and 3919368 with value:6
+3148213 and 1489583 with value:27
+3222055 and 19817666 with value:5

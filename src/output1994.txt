@@ -1,0 +1,10 @@
+8310309 and 9264574 with value:14
+7656015 and 10074939 with value:9
+7909962 and 7909959 with value:5
+7928610 and 7591923 with value:9
+8057379 and 8057361 with value:65
+7937767 and 10224282 with value:6
+7965770 and 7965771 with value:10
+7813209 and 8467649 with value:11
+7811241 and 9072344 with value:8
+7531660 and 10473803 with value:5

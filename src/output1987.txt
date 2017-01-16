@@ -1,0 +1,7 @@
+3806270 and 9481467 with value:8
+3103927 and 3103925 with value:115
+3649994 and 6236389 with value:5
+3302723 and 2647305 with value:34
+3682409 and 3735806 with value:36
+3115305 and 2822851 with value:92
+3308692 and 3308689 with value:5
